@@ -24,13 +24,17 @@ public class CombinationSumIII {
      * @param startIndex 下一层循环的开始位置
      */
     public void backtracking(int targetSum, int sum, int k, int startIndex) {
+        // 如果已选元素的组合大于n则后续操作无意义，可以剪枝
+        if (sum > targetSum) {
+            return;
+        }
         if (path.size() == k) {
             if (targetSum == sum) {
                 result.add(new ArrayList<>(path));
             }
             return;
         }
-        for (int i = startIndex; i <= 9; i++) { // 横向遍历树
+        for (int i = startIndex; i <= 9 - (k - path.size()) + 1; i++) { // 横向遍历树
             sum += i;
             path.push(i); // 处理节点，选取一个值添加到符合条件的单个结果中
             backtracking(targetSum, sum, k, i + 1); // 递归处理，控制树的纵向遍历
